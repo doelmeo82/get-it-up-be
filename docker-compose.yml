@@ -1,0 +1,52 @@
+version: '3.9'
+services:
+  backendapi:
+    build:
+      context: .
+    image: $IMAGE_NAME
+    container_name: prime-edu-be-develop
+    ports:
+      - "$EXPOSE_PORT:4000"
+    # environment:
+    #   - VIRTUAL_HOST=staging.primeedu.io.vn
+    #   - VIRTUAL_PORT=4000
+    #   - VIRTUAL_PATH=/api/v1
+    #   - LETSENCRYPT_HOST=staging.primeedu.io.vn
+    # restart: always
+    # network_mode: bridge
+
+#   nginx-proxy:
+#     image: nginxproxy/nginx-proxy
+#     container_name: nginx-proxy
+#     volumes:
+#       - /var/run/docker.sock:/tmp/docker.sock:ro
+#       - conf:/etc/nginx/conf.d
+#       - vhost:/etc/nginx/vhost.d
+#       - html:/usr/share/nginx/html
+#       - certs:/etc/nginx/certs:ro
+#       - "./my_custom_proxy_settings.conf:/etc/nginx/conf.d/my_custom_proxy_settings.conf"
+#     ports:
+#       - "8080:80"
+#       - "443:443"
+#     restart: always
+#     network_mode: bridge
+
+#   acme-companion:
+#     image: nginxproxy/acme-companion
+#     container_name: nginx-proxy-acme
+#     environment:
+#       - DEFAULT_EMAIL=vinhnguyen19052002@gmail.com
+#     volumes_from:
+#       - nginx-proxy
+#     volumes:
+#       - certs:/etc/nginx/certs:rw
+#       - acme:/etc/acme.sh
+#       - /var/run/docker.sock:/var/run/docker.sock:ro
+#     network_mode: bridge
+  
+# volumes:
+#   conf:
+#   vhost:
+#   html:
+#   certs:
+#   acme:
