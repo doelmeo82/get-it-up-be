@@ -22,15 +22,15 @@ export class FilesController {
     @UploadedFile() file: Express.Multer.File,
     @ReqUser() ctx: RequestContext,
   ): Promise<BaseApiResponse<UploadOutput>> {
-    return this.filesService.uploadFile('images', ctx.user.id, file);
+    return this.filesService.uploadFile('files', ctx.user.id, file);
   }
 
   @Post('/upload-video')
   @UseInterceptors(FileInterceptor('file'))
   async uploadVideo(
     @UploadedFile() file: Express.Multer.File,
-    @Body() data: UploadVideoInput
+    @Body() data: UploadVideoInput,
   ): Promise<BaseApiResponse<UploadOutput>> {
-    return this.filesService.uploadVideo(data , file);
+    return this.filesService.uploadVideo(data, file);
   }
 }

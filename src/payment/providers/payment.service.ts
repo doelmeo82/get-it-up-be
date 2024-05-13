@@ -32,7 +32,7 @@ export class PaymentService {
 
     return {
       error: false,
-      data: `https://prime-edu-fe.vercel.app/courses/${items[0].courseId}`,
+      data: `https://get-it-up.vercel.app/courses/${items[0].courseId}`,
       message: MESSAGES.GET_SUCCEED,
       code: 200,
     };

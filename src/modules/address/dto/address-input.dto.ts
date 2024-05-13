@@ -1,15 +1,15 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class AddressInput {
-  @IsNotEmpty()
   @IsNumber()
-  province: number;
+  @IsOptional()
+  province?: number;
 
-  @IsNotEmpty()
   @IsNumber()
-  district: number;
+  @IsOptional()
+  district?: number;
 
-  @IsNotEmpty()
   @IsString()
-  detail: string;
+  @IsOptional()
+  detail?: string;
 }

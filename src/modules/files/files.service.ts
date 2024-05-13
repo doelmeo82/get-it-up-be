@@ -43,7 +43,7 @@ export class FileService implements OnModuleInit {
         HttpStatus.BAD_REQUEST,
       );
     const uploadParams = {
-      Bucket: this.configService.get('do_bucket') || '',
+      Bucket: 'get-it-up',
       Body: file.buffer,
       Key: `${type}/${identity}-${file.originalname}`,
       ACL: 'public-read',
@@ -77,7 +77,7 @@ export class FileService implements OnModuleInit {
         HttpStatus.BAD_REQUEST,
       );
     const uploadParams = {
-      Bucket: 'lectures',
+      Bucket: 'get-it-up/video',
       Body: file.buffer,
       Key: `${data.slug}.mp4`,
       ACL: 'public-read',
@@ -86,7 +86,7 @@ export class FileService implements OnModuleInit {
     const uploadResult = await this.s3.upload(uploadParams).promise();
     const result = plainToInstance(UploadOutput, {
       key: uploadResult.Key,
-      url: `https://prime-edu.sgp1.cdn.digitaloceanspaces.com/lectures/${data.slug}.mp4`,
+      url: `https://s3.amazonaws.com/get-it-up/video/${data.slug}.mp4`,
     });
     return {
       error: false,
@@ -99,7 +99,7 @@ export class FileService implements OnModuleInit {
   async getFileSize(key: string): Promise<number | undefined> {
     const data = await this.s3
       .headObject({
-        Bucket: 'prime-edu/lectures',
+        Bucket: 'get-it-up/video',
         Key: key,
       })
       .promise();
@@ -117,7 +117,7 @@ export class FileService implements OnModuleInit {
     const res = await this.s3
       .getObject({
         Key: key,
-        Bucket: 'prime-edu/lectures',
+        Bucket: 'get-it-up/video',
         Range: range,
       })
       .promise();
