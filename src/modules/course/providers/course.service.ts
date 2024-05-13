@@ -65,6 +65,7 @@ export class CourseService {
     builder.leftJoinAndSelect('course.sections', 'sections');
     builder.leftJoinAndSelect('sections.lectures', 'lectures');
     builder.andWhere('course._id = :_id', { _id });
+    builder.orderBy('sections.sectionName', 'ASC');
 
     const course = await builder.getOne();
     const instance = plainToInstance(CourseOutput, course, {
@@ -253,7 +254,7 @@ export class CourseService {
       );
     if (page) queryBuilder.skip((page - 1) * limit);
     if (limit) queryBuilder.take(limit);
-    queryBuilder.orderBy('course.created_at', 'DESC');
+    queryBuilder.orderBy('course.courseName', 'ASC');
     const [courses, count] = await queryBuilder.getManyAndCount();
     const instance = plainToInstance(CourseOutput, courses);
     // Get category info
