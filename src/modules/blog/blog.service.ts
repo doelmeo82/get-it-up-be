@@ -14,6 +14,7 @@ import {
 } from './dto';
 import { Blog } from './entities/blog.entity';
 import { UserService } from '../user/providers';
+import { BLOG_STATUS } from '@/src/shared/enums';
 
 @Injectable()
 export class BlogService {
@@ -27,7 +28,10 @@ export class BlogService {
     userId: string,
     data: CreateBlogInput,
   ): Promise<BaseApiResponse<null>> {
-    const blog = this.blogRepository.create(data);
+    const blog = this.blogRepository.create({
+      ...data,
+      status: BLOG_STATUS.ACCEPTED,
+    });
 
     const user = await this.userService.getUserByUserId(userId);
     if (!user)

@@ -53,6 +53,14 @@ export class ExamController {
     return this.examService.teacherGetExam(ctx.user.id, filter);
   }
 
+  @Get('/student/list')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async getAll(
+    @Query() filter: FilterExamDto,
+  ): Promise<BaseApiResponse<BasePaginationResponse<FilterExamOutput>>> {
+    return this.examService.getAll(filter);
+  }
+
   @Get('/ranking')
   @UseInterceptors(ClassSerializerInterceptor)
   async getExamRanking(

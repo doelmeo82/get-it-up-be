@@ -100,6 +100,13 @@ export class User {
   })
   updatedAt!: Date;
 
+  @Column('timestamp', {
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+    name: 'last_login',
+  })
+  lastLogin!: Date;
+
   @ManyToMany(() => Role)
   @JoinTable()
   roles: Role[];

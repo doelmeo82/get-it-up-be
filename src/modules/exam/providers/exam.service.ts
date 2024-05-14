@@ -76,6 +76,31 @@ export class ExamService {
     };
   }
 
+  async getAll(
+    filter: FilterExamDto,
+  ): Promise<BaseApiResponse<BasePaginationResponse<FilterExamOutput>>> {
+    const { limit, page } = filter;
+    const builder = this.examRepository.createQueryBuilder('exam');
+
+    if (page) builder.skip((page - 1) * limit);
+    if (limit) builder.take(limit);
+    const [exams, count] = await builder.getManyAndCount();
+    const instance = plainToInstance(FilterExamOutput, exams, {
+      excludeExtraneousValues: true,
+    });
+
+    return {
+      error: false,
+      data: {
+        listData: instance,
+        total: count,
+        totalPage: Math.ceil(count / limit),
+      },
+      message: MESSAGES.GET_SUCCEED,
+      code: 200,
+    };
+  }
+
   async teacherGetExam(
     teacherId: string,
     filter: FilterExamDto,

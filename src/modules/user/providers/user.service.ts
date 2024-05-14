@@ -136,6 +136,32 @@ export class UserService {
     };
   }
 
+  async getUserLogin(): Promise<BaseApiResponse<any>> {
+    const [users] = await this.userRepository.findAndCount({});
+    let totalToday = 0,
+      totalMonth = 0;
+    const current = new Date();
+
+    users.forEach((user) => {
+      const date = new Date(user.lastLogin);
+      const month = date.getMonth();
+      const day = date.getDay();
+
+      if (current.getDay() === day) totalToday += 1;
+      if (current.getMonth() === month) totalMonth += 1;
+    });
+
+    return {
+      error: false,
+      data: {
+        totalToday,
+        totalMonth,
+      },
+      message: MESSAGES.GET_SUCCEED,
+      code: 200,
+    };
+  }
+
   public async create(data: RegisterInput): Promise<User> {
     const newData = plainToInstance(CreateTeacherInput, data);
     const userExist = await this.userRepository.findOne({

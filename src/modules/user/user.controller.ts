@@ -24,6 +24,12 @@ export class UserController {
     return this.userService.getCurrentUser(ctx.user.id);
   }
 
+  @Get('statistic')
+  @UseInterceptors(ClassSerializerInterceptor)
+  public async getUserLogin(): Promise<BaseApiResponse<any>> {
+    return this.userService.getUserLogin();
+  }
+
   @Put('/info')
   @UseInterceptors(ClassSerializerInterceptor)
   public async updateUser(

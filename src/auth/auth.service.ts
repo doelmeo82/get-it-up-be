@@ -79,6 +79,7 @@ export class AuthService {
     const jwt = this.generateToken(user);
     await this.userService.update(user._id, {
       refreshToken: jwt.refreshToken,
+      lastLogin: new Date(),
     });
     return plainToInstance(BaseApiResponse<UserOutputDto>, {
       error: false,
